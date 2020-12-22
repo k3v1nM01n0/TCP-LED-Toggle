@@ -1,14 +1,16 @@
 #include <Arduino.h>
-#include <ESP8266WiFi.h>
+#include "ESP8266WiFi.h"
 
-#define SSID = "wifi_name"
-#define PASSWORD = "wifi_pass"
+#define SSID  "C.I.A Surveillance Van"
+#define PASSWORD "1Ax8IXdbX3h5"
 
-#define HOST =  //host ip
-#define PORT = 5050 //server port
+#define HOST "192.168.0.21" //host ip
+#define PORT  5050 //server port
+int LED = 5; //assign LED pin i.e D1 on nodeMCU
 
 void setup() {
-    Serial1.begin(115200); //setting baudrate
+    Serial.begin(115200); //setting baudrate
+    pinMode(LED, OUTPUT); //initialize gpio 5 as an output
 
     //Connecting to the wifi
     Serial.println();
@@ -38,20 +40,29 @@ void loop() {
       delay(500); //retry after 5 seconds
       return;
     }
-
+    delay(1000);
     //receive data from server char by char
     Serial.println("receiving data from server...");
     while (client.available()){
       char c = static_cast<char>(client.read());
       Serial.printf("%c\r\n", c);
+      if (c == '1'){
+        digitalWrite(LED, HIGH);
+        delay(1000);
+      }else{
+        digitalWrite(LED, LOW);
+        delay(1000);
+      }
     }
 
-Serial.println();
+    
 
-//closing socket
-client.stop();
+    Serial.println();
 
-delay(5000); //wait 5 seconds
-return;
+    //closing socket
+    client.stop();
+
+    delay(5000); //wait 5 seconds
+    return;
 
 }
