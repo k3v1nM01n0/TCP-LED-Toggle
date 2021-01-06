@@ -1,8 +1,8 @@
 #include <Arduino.h>
 #include "ESP8266WiFi.h"
 
-#define SSID  "C.I.A Surveillance Van"
-#define PASSWORD "1Ax8IXdbX3h5"
+#define SSID  "wifi_name"
+#define PASSWORD "wifi_pass"
 
 #define HOST "192.168.0.21" //host ip
 #define PORT  5050 //server port
